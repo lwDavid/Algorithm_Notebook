@@ -1,7 +1,7 @@
 #include <stdio.h>
 int main() {
     int n1, n2, count = 0;
-    float coe1[1001] = {0.0}, coe2[1001] = {0.0}, res[2001] = {0.0};
+    float coe[1001] = {0.0}, res[2001] = {0.0};
     if (scanf("%d", &n1))
         ;
     for (int i = 1; i <= n1; i++) {
@@ -9,7 +9,7 @@ int main() {
         float N;
         if (scanf("%d %f", &a, &N))
             ;
-        coe1[a] = N;
+        coe[a] = N;
     }
     if (scanf("%d", &n2))
         ;
@@ -18,15 +18,9 @@ int main() {
         float N;
         if (scanf("%d %f", &a, &N))
             ;
-        coe2[a] = N;
-    }
-
-    for (int i = 0; i <= 1000; i++) {
-        if (coe1[i] != 0) {
-            for (int j = 0; j <= 1000; j++) {
-                if (coe2[j] != 0) {
-                    res[i + j] += coe1[i] * coe2[j];
-                }
+        for (int j = 0; j <= 1000; j++) {
+            if (coe[j] != 0) {
+                res[j + a] += coe[j] * N;
             }
         }
     }
