@@ -1,23 +1,24 @@
-#define maxn 1000
 #include <stdio.h>
 struct Student {
     char name[11];
     char id[11];
     short score;
-} list[maxn];
+} temp, min, max;
 int main() {
-    int n, min = 0, max = 0;
+    int n;
     if (scanf("%d", &n))
         ;
+    min.score = 101;
+    max.score = -1;
     for (int i = 0; i < n; i++) {
-        if (scanf("%s %s %hd", list[i].name, list[i].id, &list[i].score))
+        if (scanf("%s %s %hd", temp.name, temp.id, &temp.score))
             ;
-        if (list[i].score < list[min].score)
-            min = i;
-        if (list[i].score > list[max].score)
-            max = i;
+        if (temp.score < min.score)
+            min = temp;
+        if (temp.score > max.score)
+            max = temp;
     }
-    printf("%s %s\n", list[max].name, list[max].id);
-    printf("%s %s", list[min].name, list[min].id);
+    printf("%s %s\n", max.name, max.id);
+    printf("%s %s", min.name, min.id);
     return 0;
 }
