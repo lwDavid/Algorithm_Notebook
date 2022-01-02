@@ -20,22 +20,17 @@ int main() {
         if (temp.gender == 'M' && temp.grade < m_min.grade)
             m_min = temp;
     }
-    if (f_max.grade == -1) {
+    if (f_max.grade == -1)
         printf("Absent\n");
-        if (m_min.grade == 101) {
-            printf("Absent\n");
-        } else {
-            printf("%s %s\n", m_min.name, m_min.ID);
-        }
-        printf("NA");
-    } else {
+    else
         printf("%s %s\n", f_max.name, f_max.ID);
-        if (m_min.grade == 101) {
-            printf("Absent\nNA");
-        } else {
-            printf("%s %s\n%d", m_min.name, m_min.ID,
-                   f_max.grade - m_min.grade);
-        }
-    }
+    if (m_min.grade == 101)
+        printf("Absent\n");
+    else
+        printf("%s %s\n", m_min.name, m_min.ID);
+    if (f_max.grade == -1 || m_min.grade == 101)
+        printf("NA");
+    else
+        printf("%d", f_max.grade - m_min.grade);
     return 0;
 }
