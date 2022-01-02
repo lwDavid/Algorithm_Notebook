@@ -1,32 +1,13 @@
 #include <stdio.h>
+char radix[13] = {'0', '1', '2', '3', '4', '5', '6',
+                  '7', '8', '9', 'A', 'B', 'C'};
 int main() {
-    int earth[3], mars[3][2] = {0};
-    if (scanf("%d %d %d", &earth[0], &earth[1], &earth[2]))
+    int r, g, b;
+    if (scanf("%d %d %d", &r, &g, &b))
         ;
-    for (int i = 0; i < 3; i++) {
-        int n = 0;
-        do {
-            mars[i][n++] = earth[i] % 13;
-            earth[i] /= 13;
-        } while (earth[i] != 0);
-    }
     printf("#");
-    for (int i = 0; i < 3; i++) {
-        for (int j = 1; j >= 0; j--) {
-            switch (mars[i][j]) {
-                case 10:
-                    printf("A");
-                    break;
-                case 11:
-                    printf("B");
-                    break;
-                case 12:
-                    printf("C");
-                    break;
-                default:
-                    printf("%d", mars[i][j]);
-            }
-        }
-    }
+    printf("%c%c", radix[r / 13], radix[r % 13]);
+    printf("%c%c", radix[g / 13], radix[g % 13]);
+    printf("%c%c", radix[b / 13], radix[b % 13]);
     return 0;
 }
