@@ -1,6 +1,6 @@
 #include <stdio.h>
 int main() {
-    int A, B, D, res[40], num = 0;
+    int A, B, D, res[31], num = 0;
     if (scanf("%d %d %d", &A, &B, &D))
         ;
     A += B;
