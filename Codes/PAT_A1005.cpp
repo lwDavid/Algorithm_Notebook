@@ -3,8 +3,8 @@
 char spell[10][6] = {"zero", "one", "two",   "three", "four",
                      "five", "six", "seven", "eight", "nine"};
 int main() {
-    int sum = 0, count = 0, flag = 0;
-    char str[102], res[3] = {0};
+    int sum = 0, count = 0;
+    char str[102], res[4] = {0};
     if (scanf("%s", str))
         ;
     for (int i = 0; i < strlen(str); i++)
@@ -14,19 +14,13 @@ int main() {
         return 0;
     }
     do {
-        res[count++] = sum % 10;
+        res[count++] = '0' + sum % 10;
         sum /= 10;
     } while (sum != 0);
-    for (int i = 2; i >= 0; i--) {
-        if (res[i] == 0 && flag == 0)
-            continue;
-        else
-            flag++;
-        if (flag) {
-            if (flag != 1)
-                printf(" ");
-            printf("%s", spell[(int)res[i]]);
-        }
+    for (int i = strlen(res) - 1; i >= 0; i--) {
+        printf("%s", spell[res[i] - '0']);
+        if (i != 0)
+            printf(" ");
     }
     return 0;
 }
