@@ -15,20 +15,21 @@ int main() {
         ;
     if (str[0] == '-')
         printf("-");
+    if (exp == 0) {
+        for (int i = 1; i < Epos; i++) {
+            printf("%c", str[i]);
+        }
+        return 0;
+    }
     if (exp < 0) {
         exp = -exp;
-        for (int i = 0; i < exp; i++) {
-            if (i == 1)
-                printf(".");
+        printf("0.");
+        for (int i = 1; i < exp; i++) {
             printf("0");
         }
         for (int i = 1; i < Epos; i++) {
             if (str[i] == '.')
                 continue;
-            printf("%c", str[i]);
-        }
-    } else if (exp == 0) {
-        for (int i = 1; i < Epos; i++) {
             printf("%c", str[i]);
         }
     } else if (exp >= len) {
