@@ -38,20 +38,15 @@ int main() {
         locat++;
     }
     sort(list, list+count, cmp);
+    printf("%d\n", count);
     list[0].f_rank = 1;
     for (int i = 1; i < count; i++) {
         if (list[i].score == list[i - 1].score)
             list[i].f_rank = list[i - 1].f_rank;
         else
             list[i].f_rank = i + 1;
+        printf("%s %d %d %d", list[i].number, list[i].f_rank, list[i].location,list[i].l_rank);
+        if(i!=count-1) printf("\n");
     }
-    printf("%d\n", count);
-    for (int i = 0; i < count; i++) {
-        printf("%s %d %d %d", list[i].number, list[i].f_rank, list[i].location,
-               list[i].l_rank);
-        if (i != count - 1)
-            printf("\n");
-    }
-
     return 0;
 }
