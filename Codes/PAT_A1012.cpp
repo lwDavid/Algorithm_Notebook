@@ -2,6 +2,7 @@
 #include <cmath>
 #include <cstdio>
 using namespace std;
+char course[4] = {'A', 'C', 'M', 'E'};
 int sortn = 0;
 struct Student {
     int id;
@@ -15,11 +16,11 @@ int main() {
     if (scanf("%d %d", &N, &M))
         ;
     while (N--) {
-        if (scanf("%d %d %d %d", &list[count].id, &list[count].info[0],
-                  &list[count].info[1], &list[count].info[2]))
-            list[count].info[3] =
-                round((list[count].info[0] + list[count].info[1] +
-                       list[count].info[2]) /
+        if (scanf("%d %d %d %d", &list[count].id, &list[count].info[1],
+                  &list[count].info[2], &list[count].info[3]))
+            list[count].info[0] =
+                round((list[count].info[1] + list[count].info[2] +
+                       list[count].info[3]) /
                       3.0);
         count++;
     }
@@ -39,17 +40,12 @@ int main() {
             ;
         for (int i = 0; i < count; i++) {
             if (list[i].id == search) {
-                if (list[i].rank[3] <= list[i].rank[0] &&
-                    list[i].rank[3] <= list[i].rank[1] &&
-                    list[i].rank[3] <= list[i].rank[2])
-                    printf("%d A\n", list[i].rank[3]);
-                else if (list[i].rank[0] <= list[i].rank[1] &&
-                         list[i].rank[0] <= list[i].rank[2])
-                    printf("%d C\n", list[i].rank[0]);
-                else if (list[i].rank[1] <= list[i].rank[2])
-                    printf("%d M\n", list[i].rank[1]);
-                else
-                    printf("%d E\n", list[i].rank[2]);
+                int k = 0;
+                for (int j = 0; j < 4; j++) {
+                    if (list[i].rank[j] < list[i].rank[k])
+                        k = j;
+                }
+                printf("%d %c\n", list[i].rank[k], course[k]);
                 goto next;
             }
         }
