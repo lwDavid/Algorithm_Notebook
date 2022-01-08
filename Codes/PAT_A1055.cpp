@@ -2,10 +2,11 @@
 #include <cstdio>
 #include <cstring>
 using namespace std;
+int Age[100000] = {0};
 struct Rich {
     char name[9];
     int age, worth;
-} list[100000];
+} list[100000], valid[100000];
 bool cmp(Rich A, Rich B) {
     if (A.worth != B.worth)
         return A.worth > B.worth;
@@ -24,13 +25,21 @@ int main() {
             count++;
     }
     sort(list, list + count, cmp);
+    int validNum = 0;
+    for (int i = 0; i < count; i++) {
+        if (Age[list[i].age] < 100) {
+            Age[list[i].age]++;
+            valid[validNum++] = list[i];
+        }
+    }
     while (K--) {
         flag = 0;
         if (scanf("%d %d %d", &M, &Amin, &Amax))
             printf("Case #%d:\n", t++);
-        for (int i = 0; i < count; i++) {
-            if (list[i].age >= Amin && list[i].age <= Amax && M) {
-                printf("%s %d %d\n", list[i].name, list[i].age, list[i].worth);
+        for (int i = 0; i < validNum; i++) {
+            if (valid[i].age >= Amin && valid[i].age <= Amax && M) {
+                printf("%s %d %d\n", valid[i].name, valid[i].age,
+                       valid[i].worth);
                 flag++, M--;
             }
         }
