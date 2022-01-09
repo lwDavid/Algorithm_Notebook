@@ -4,7 +4,8 @@
 using namespace std;
 int K, full[6] = {0};
 struct User {
-    int id, sum = -1, perfect = 0, submit = 0, compile = 0, rank;
+    bool compile = false;
+    int id, sum = 0, perfect = 0;
     int scores[6] = {-1, -1, -1, -1, -1, -1};
 } list[10001];
 bool cmp(User A, User B) {
@@ -16,7 +17,7 @@ bool cmp(User A, User B) {
         return A.id < B.id;
 }
 int main() {
-    int N, M, problem, score, temp;
+    int N, M, problem, score, temp, rank = 1;
     if (scanf("%d %d %d", &N, &K, &M))
         ;
     for (int i = 1; i <= K; i++) {
@@ -27,40 +28,31 @@ int main() {
         list[i].id = i;
     while (M--) {
         if (scanf("%d %d %d", &temp, &problem, &score)) {
-            list[temp].submit++;
+            ;
             if (score == full[problem] &&
                 list[temp].scores[problem] != full[problem])
                 list[temp].perfect++;
+            if(list[temp].scores[problem]==-1&&score==-1)
+                list[temp].scores[problem]=0;
             if (score != -1)
-                list[temp].compile++;
-            if (list[temp].scores[problem] < 0)
-                list[temp].scores[problem] = 0;
+                list[temp].compile = true;
             list[temp].scores[problem] = (score > list[temp].scores[problem])
                                              ? score
                                              : list[temp].scores[problem];
         }
     }
     for (int i = 1; i <= N; i++) {
-        if (list[i].scores[1] >= 0 || list[i].scores[2] >= 0 ||
-            list[i].scores[3] >= 0 || list[i].scores[4] >= 0 ||
-            list[i].scores[5] >= 0)
-            list[i].sum = 0;
         for (int j = 1; j <= K; j++) {
             list[i].sum += list[i].scores[j] >= 0 ? list[i].scores[j] : 0;
         }
     }
     sort(list + 1, list + 1 + N, cmp);
-    list[1].rank = 1;
-    for (int i = 2; i <= N; i++) {
-        if (list[i].sum == list[i - 1].sum)
-            list[i].rank = list[i - 1].rank;
-        else
-            list[i].rank = i;
-    }
     for (int i = 1; i <= N; i++) {
-        if (!list[i].submit || !list[i].compile)
+        if (!list[i].compile)
             continue;
-        printf("%d %05d %d", list[i].rank, list[i].id, list[i].sum);
+        if (i > 1 && list[i].sum != list[i - 1].sum && list[i].compile)
+            rank = i;
+        printf("%d %05d %d", rank, list[i].id, list[i].sum);
         for (int j = 1; j <= K; j++) {
             if (list[i].scores[j] == -1)
                 printf(" -");
