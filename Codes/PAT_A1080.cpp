@@ -1,32 +1,38 @@
 #include <algorithm>
 #include <cstdio>
-#include <cstring>
 using namespace std;
-int quota[100] = {0}, roll[100] = {0}, last[100] = {0};
 struct Student {
-    int GE, GI, rank, enroll = -1, id;
-    double fin;
+    int GE, GI, rank, id, fin;
     int goal[5];
 } list[40000];
+struct Sch {
+    int quota;
+    int stuNum;
+    int id[40000];
+    int lastAdmit;
+} sch[100];
 bool cmp1(Student a, Student b) {
     if (a.fin != b.fin)
         return a.fin > b.fin;
     else
         return a.GE > b.GE;
 }
-bool cmp2(Student a, Student b) {
-    return a.id < b.id;
+bool cmp2(int a, int b) {
+    return list[a].id < list[b].id;
 }
 int main() {
     int N, M, K;
     if (scanf("%d %d %d", &N, &M, &K))
         ;
-    for (int i = 0; i < M; i++)
-        if (scanf("%d ", &quota[i]))
+    for (int i = 0; i < M; i++) {
+        if (scanf("%d ", &sch[i].quota))
             ;
+        sch[i].stuNum = 0;
+        sch[i].lastAdmit = -1;
+    }
     for (int i = 0; i < N; i++) {
         if (scanf("%d %d ", &list[i].GE, &list[i].GI)) {
-            list[i].fin = (list[i].GE + list[i].GI) / 2.0;
+            list[i].fin = list[i].GE + list[i].GI;
             list[i].id = i;
         }
         for (int j = 0; j < K; j++)
@@ -41,33 +47,28 @@ int main() {
         else
             list[i].rank = i + 1;
     for (int i = 0; i < N; i++)
-        for (int j = 0; j < K; j++)
-            if (quota[list[i].goal[j]] > 0) {
-                list[i].enroll = list[i].goal[j];
-                roll[list[i].goal[j]]++;
-                quota[list[i].goal[j]]--;
-                if (quota[list[i].goal[j]] == 0)
-                    last[list[i].goal[j]] = list[i].rank;
-                break;
-            } else if (list[i].rank == last[list[i].goal[j]]) {
-                list[i].enroll = list[i].goal[j];
-                roll[list[i].goal[j]]++;
-                quota[list[i].goal[j]]--;
+        for (int j = 0; j < K; j++) {
+            int choice = list[i].goal[j];
+            int num = sch[choice].stuNum;
+            int last = sch[choice].lastAdmit;
+            if (num < sch[choice].quota ||
+                (last != -1 && list[i].rank == list[last].rank)) {
+                sch[choice].id[num] = i;
+                sch[choice].lastAdmit = i;
+                sch[choice].stuNum++;
                 break;
             }
-    sort(list, list + N, cmp2);
-    for (int i = 0; i < M; i++)
-        if (!roll[i])
-            printf("\n");
-        else {
-            for (int j = 0; j < N; j++)
-                if (list[j].enroll == i) {
-                    printf("%d", j);
-                    roll[i]--;
-                    if (roll[i])
-                        printf(" ");
-                }
-            printf("\n");
         }
+    for (int i = 0; i < M; i++) {
+        if (sch[i].stuNum > 0) {
+            sort(sch[i].id, sch[i].id + sch[i].stuNum, cmp2);
+            for (int j = 0; j < sch[i].stuNum; j++) {
+                printf("%d", list[sch[i].id[j]].id);
+                if (j < sch[i].stuNum - 1)
+                    printf(" ");
+            }
+        }
+        printf("\n");
+    }
     return 0;
 }
