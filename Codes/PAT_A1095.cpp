@@ -4,35 +4,25 @@
 using namespace std;
 struct Record {
     char ID[8], state[4];
-    int hh, mm, ss, time, t;
+    int t, time;
 } list[10000], valid[10000];
 bool cmp(Record A, Record B) {
     if (strcmp(A.ID, B.ID))
         return strcmp(A.ID, B.ID) < 0;
-    else if (A.hh != B.hh)
-        return A.hh < B.hh;
-    else if (A.mm != B.mm)
-        return A.mm < B.mm;
     else
-        return A.ss < B.ss;
+        return A.t < B.t;
 }
 bool cmp_time(Record A, Record B) {
-    if (A.hh != B.hh)
-        return A.hh < B.hh;
-    else if (A.mm != B.mm)
-        return A.mm < B.mm;
-    else
-        return A.ss < B.ss;
+    return A.t < B.t;
 }
 int main() {
-    int N, K, count = 0, time = 0, qhh, qmm, qss, qtime = 0, cars = 0,
-              start = 0;
+    int hh, mm, ss, N, K, count = 0, time = 0, qhh, qmm, qss, qtime = 0,
+                          cars = 0, start = 0;
     if (scanf("%d %d", &N, &K))
         ;
     for (int i = 0; i < N; i++)
-        if (scanf("%s %d:%d:%d %s", list[i].ID, &list[i].hh, &list[i].mm,
-                  &list[i].ss, list[i].state))
-            list[i].t = list[i].hh * 3600 + list[i].mm * 60 + list[i].ss;
+        if (scanf("%s %d:%d:%d %s", list[i].ID, &hh, &mm, &ss, list[i].state))
+            list[i].t = hh * 3600 + mm * 60 + ss;
     sort(list, list + N, cmp);
     for (int i = 0; i < N; i++)
         if (!strcmp(list[i].ID, list[i + 1].ID)) {
