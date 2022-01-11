@@ -5,11 +5,9 @@ struct Student {
     int GE, GI, rank, id, fin;
     int goal[5];
 } list[40000];
-struct Sch {
-    int quota;
-    int stuNum;
+struct School {
+    int quota, roll, last;
     int id[40000];
-    int lastAdmit;
 } sch[100];
 bool cmp1(Student a, Student b) {
     if (a.fin != b.fin)
@@ -24,12 +22,10 @@ int main() {
     int N, M, K;
     if (scanf("%d %d %d", &N, &M, &K))
         ;
-    for (int i = 0; i < M; i++) {
-        if (scanf("%d ", &sch[i].quota))
-            ;
-        sch[i].stuNum = 0;
-        sch[i].lastAdmit = -1;
-    }
+    for (int i = 0; i < M; i++)
+        if (scanf("%d ", &sch[i].quota)) {
+            sch[i].roll = sch[i].last = 0;
+        }
     for (int i = 0; i < N; i++) {
         if (scanf("%d %d ", &list[i].GE, &list[i].GI)) {
             list[i].fin = list[i].GE + list[i].GI;
@@ -48,23 +44,23 @@ int main() {
             list[i].rank = i + 1;
     for (int i = 0; i < N; i++)
         for (int j = 0; j < K; j++) {
-            int choice = list[i].goal[j];
-            int num = sch[choice].stuNum;
-            int last = sch[choice].lastAdmit;
-            if (num < sch[choice].quota ||
-                (last != -1 && list[i].rank == list[last].rank)) {
-                sch[choice].id[num] = i;
-                sch[choice].lastAdmit = i;
-                sch[choice].stuNum++;
+            int roll = sch[list[i].goal[j]].roll;
+            int goal = list[i].goal[j];
+            if (sch[goal].quota > 0 || list[i].rank == sch[goal].last) {
+                sch[goal].id[roll] = i;
+                sch[goal].roll++;
+                sch[goal].quota--;
+                if (sch[goal].quota == 0)
+                    sch[goal].last = list[i].rank;
                 break;
             }
         }
     for (int i = 0; i < M; i++) {
-        if (sch[i].stuNum > 0) {
-            sort(sch[i].id, sch[i].id + sch[i].stuNum, cmp2);
-            for (int j = 0; j < sch[i].stuNum; j++) {
+        if (sch[i].roll) {
+            sort(sch[i].id, sch[i].id + sch[i].roll, cmp2);
+            for (int j = 0; j < sch[i].roll; j++) {
                 printf("%d", list[sch[i].id[j]].id);
-                if (j < sch[i].stuNum - 1)
+                if (j != sch[i].roll - 1)
                     printf(" ");
             }
         }
