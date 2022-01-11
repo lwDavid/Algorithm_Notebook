@@ -5,7 +5,7 @@ using namespace std;
 struct Student {
     char name[11], ID[11];
     int grade;
-} list[1000];
+} list[50];
 bool cmp(Student a, Student b) {
     return a.grade > b.grade;
 }
