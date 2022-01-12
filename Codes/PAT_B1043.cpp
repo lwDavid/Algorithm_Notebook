@@ -6,26 +6,9 @@ int main() {
     if (scanf("%s", str))
         len = strlen(str);
     for (int i = 0; i < len; i++)
-        switch (str[i]) {
-            case 'P':
-                letter[0]++, count++;
-                break;
-            case 'A':
-                letter[1]++, count++;
-                break;
-            case 'T':
-                letter[2]++, count++;
-                break;
-            case 'e':
-                letter[3]++, count++;
-                break;
-            case 's':
-                letter[4]++, count++;
-                break;
-            case 't':
-                letter[5]++, count++;
-                break;
-        }
+        for (int j = 0; j < 6; j++)
+            if (str[i] == put[j])
+                letter[j]++, count++;
     while (count)
         for (int i = 0; i < 6; i++)
             if (letter[i]) {
