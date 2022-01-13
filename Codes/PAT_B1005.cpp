@@ -1,5 +1,5 @@
 #include <stdio.h>
-int K = 0, num = 0, tag[3967] = {0}, exist[101] = {0}, count = 0;
+int K = 0, num = 0, tag[3971] = {0}, exist[101] = {0}, count = 0;
 void Callatz(int k) {
     while (k != 1) {
         tag[k]++;
