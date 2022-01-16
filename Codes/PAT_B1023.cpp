@@ -11,10 +11,8 @@ int main() {
             break;
         }
     for (int i = 0; i < 10; i++)
-        while (num[i]) {
+        for (int j = 0; j < num[i]; j++)
             printf("%d", i);
-            num[i]--;
-        }
     printf("\n");
     return 0;
 }
