@@ -1,21 +1,33 @@
 #include <stdio.h>
 int main() {
-    int N, pos[100000] = {0}, t, count = 0;
-    if (scanf("%d", &N))
+    int N, pos[100000], t, count = 0, left = 0, k = 1;
+    if (scanf("%d", &N)) {
+        left = N - 1;
         for (int i = 0; i < N; i++)
-            if (scanf("%d", &t))
+            if (scanf("%d", &t)) {
                 pos[t] = i;
-    for (int i = 0; i < N; i++) {
-        if (pos[i] != i && i > 0) {
-            pos[0] = pos[i];
-            pos[i] = 0;
-            count++;
+                if (t == i && i != 0)
+                    left--;
+            }
+    }
+    while (left) {
+        if (pos[0] == 0) {
+            while (k < N) {
+                if (pos[k] != k) {
+                    pos[0] = pos[k];
+                    pos[k] = 0;
+                    count++;
+                    break;
+                }
+                k++;
+            }
         }
         while (pos[0]) {
             int temp = pos[0];
             pos[0] = pos[pos[0]];
             pos[temp] = temp;
             count++;
+            left--;
         }
     }
     printf("%d\n", count);
