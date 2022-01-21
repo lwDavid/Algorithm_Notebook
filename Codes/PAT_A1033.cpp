@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cmath>
 #include <cstdio>
 using namespace std;
 struct Station {
@@ -22,41 +23,38 @@ int main() {
     run = V * Davg;
     I[num].price = 0;
     I[num].dis = journey;
-    int start = 0, i;
-    double progress = 0.0, gas = 0.0, cost = 0.0;
+    int start = 0, i, m;
+    double gas = 0.0, cost = 0.0;
     while (start < num) {
-        if (I[start + 1].dis - I[start].dis > run) {
-            printf("The maximum travel distance = %.2f\n", progress + run);
-            return 0;
-        }
-        int min = -1;
-        for (i = start + 1; (I[i].dis - I[start].dis) < run && i <= num; i++) {
-            if (I[i].price < I[start].price) {
-                min = i;
-                break;
+        m = -1;
+        double min = INFINITY;
+        for (i = start + 1; i <= num && (I[i].dis - I[start].dis) <= run; i++) {
+            if (I[i].price < min) {
+                min = I[i].price;
+                m = i;
+                if (min < I[start].price)
+                    break;
             }
         }
-        if (min == -1) {
-            int tmin = start + 1;
-            for (i = tmin; (I[i].dis - I[start].dis) < run && i <= num; i++)
-                if (I[i].price < I[tmin].price)
-                    tmin = i;
-            cost += (V - gas) * I[start].price;
-            gas = V - (I[tmin].dis - I[start].dis) / Davg;
-            progress = I[tmin].dis;
-            start = tmin;
-        } else {
-            progress = I[min].dis;
-            if (gas * Davg <= I[min].dis - I[start].dis) {
-                cost += ((I[min].dis - I[start].dis) - gas * Davg) / Davg *
-                        I[start].price;
+        if (m == -1)
+            break;
+        double need = (I[m].dis - I[start].dis) / Davg;
+        if (min < I[start].price) {
+            if (gas < need) {
+                cost += (need - gas) * I[start].price;
                 gas = 0;
-            } else
-                gas -= (I[min].dis - I[start].dis) / Davg;
-            start = min;
-            continue;
+            } else {
+                gas -= need;
+            }
+        } else {
+            cost += (V - gas) * I[start].price;
+            gas = V - need;
         }
+        start = m;
     }
-    printf("%.2lf\n", cost);
+    if (start == num)
+        printf("%.2lf\n", cost);
+    else
+        printf("The maximum travel distance = %.2lf\n", I[start].dis + run);
     return 0;
 }
