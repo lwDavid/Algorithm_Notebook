@@ -43,7 +43,7 @@ int main() {
         res = findRadix(b, a, radix);
     else
         res = findRadix(a, b, radix);
-    if (res == -1)
+    if ((signed)res == -1)
         printf("Impossible\n");
     else
         printf("%lld\n", res);
