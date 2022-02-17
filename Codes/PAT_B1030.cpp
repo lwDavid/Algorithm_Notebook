@@ -38,7 +38,8 @@ int main() {
 //     if (scanf("%d%d", &N, &p))
 //         for (int i = 0; i < N; i++)
 //             if (scanf("%d", &nums[i]))
-//                 r = N;
+//                 ;
+//     r = N;
 //     sort(nums, nums + N);
 //     while (l <= r) {
 //         flag = 0;
