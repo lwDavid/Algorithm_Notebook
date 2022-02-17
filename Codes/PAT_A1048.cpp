@@ -49,3 +49,29 @@ int main() {
 //     printf("No Solution\n");
 //     return 0;
 // }
+
+// Another version using two pointers.
+// #include <algorithm>
+// #include <cstdio>
+// int main() {
+//     int N, M, coins[100000], i = 0, j;
+//     if (scanf("%d %d", &N, &M))
+//         for (int i = 0; i < N; i++)
+//             if (scanf("%d", &coins[i]))
+//                 ;
+//     std::sort(coins, coins + N);
+//     j = N - 1;
+//     while (i < j) {
+//         if (coins[i] + coins[j] == M)
+//             break;
+//         else if (coins[i] + coins[j] < M)
+//             i++;
+//         else
+//             j--;
+//     }
+//     if (i < j)
+//         printf("%d %d\n", coins[i], coins[j]);
+//     else
+//         printf("No Solution\n");
+//     return 0;
+// }
