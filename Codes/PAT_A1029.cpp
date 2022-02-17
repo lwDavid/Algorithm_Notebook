@@ -1,25 +1,22 @@
 #include <stdio.h>
 int main() {
-    long A[200000], B[200000], C[400000];
-    int m, n, i = 0, j = 0, index = 0;
+    int A[200001], B[200001], m, n, i = 0, j = 0, k = 0, pos;
     if (scanf("%d", &m))
         for (int t = 0; t < m; t++)
-            if (scanf("%ld", &A[t]))
-                ;
+            if (scanf("%d", &A[t]))
+                A[m] = 0x7fffffff;
     if (scanf("%d", &n))
         for (int t = 0; t < n; t++)
-            if (scanf("%ld", &B[t]))
-                ;
-    while (i < m && j < n) {
-        if ((long)A[i] <= (long)B[j])
-            C[index++] = A[i++];
+            if (scanf("%d", &B[t]))
+                B[n] = 0x7fffffff;
+    pos = (m + n - 1) / 2;
+    while (k < pos) {
+        if (A[i] < B[j])
+            i++;
         else
-            C[index++] = B[j++];
+            j++;
+        k++;
     }
-    while (i < m)
-        C[index++] = A[i++];
-    while (j < n)
-        C[index++] = B[j++];
-    printf("%ld\n", C[(index - 1) / 2]);
+    printf("%d\n", A[i] < B[j] ? A[i] : B[j]);
     return 0;
 }
