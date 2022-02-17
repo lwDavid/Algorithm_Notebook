@@ -1,10 +1,10 @@
-#include <limits.h>
-#include <stdio.h>
-int find(int add[], int l, int r, int x) {
-    int left = l, right = r, mid;
+#include <cstdio>
+int sum[100000], n, S, nearS = 100000010;
+int upper_bound(int L, int R, int x) {
+    int left = L, right = R, mid;
     while (left < right) {
         mid = (left + right) / 2;
-        if (add[mid] > x)
+        if (sum[mid] > x)
             right = mid;
         else
             left = mid + 1;
@@ -12,27 +12,23 @@ int find(int add[], int l, int r, int x) {
     return left;
 }
 int main() {
-    int N, M, num, add[100001] = {0}, maxn = INT_MAX, output = 0;
-    if (scanf("%d %d", &N, &M))
-        for (int i = 1; i <= N; i++)
-            if (scanf("%d", &num))
-                add[i] += add[i - 1] + num;
-    for (int i = 1; i <= N; i++) {
-        int j = find(add, i, N + 1, add[i - 1] + M);
-        if (add[j - 1] - add[i - 1] == M) {
-            maxn = M;
+    if (scanf("%d %d", &n, &S))
+        sum[0] = 0;
+    for (int i = 1; i <= n; i++)
+        if (scanf("%d", &sum[i]))
+            sum[i] += sum[i - 1];
+    for (int i = 1; i <= n; i++) {
+        int j = upper_bound(i, n + 1, sum[i - 1] + S);
+        if (sum[j - 1] - sum[i - 1] == S) {
+            nearS = S;
             break;
-        } else if (add[j] - add[i - 1] < maxn && j <= N)
-            maxn = add[j] - add[i - 1];
+        } else if (j <= n && sum[j] - sum[i - 1] < nearS)
+            nearS = sum[j] - sum[i - 1];
     }
-    for (int i = 1; i <= N; i++) {
-        int j = find(add, i, N + 1, add[i - 1] + maxn);
-        if (add[j - 1] - add[i - 1] == maxn) {
-            if (output)
-                printf("\n");
-            printf("%d-%d", i, j - 1);
-            output = 1;
-        }
+    for (int i = 1; i <= n; i++) {
+        int j = upper_bound(i, n + 1, sum[i - 1] + nearS);
+        if (sum[j - 1] - sum[i - 1] == nearS)
+            printf("%d-%d\n", i, j - 1);
     }
     return 0;
 }
