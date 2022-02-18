@@ -2,7 +2,8 @@
 #include <string.h>
 int main() {
     char str[100001];
-    int P = 0, A = 0, T = 0, index = 0, len;
+    int P = 0, A = 0, index = 0, len;
+    long T = 0;
     if (scanf("%s", str))
         ;
     len = strlen(str);
@@ -18,10 +19,8 @@ int main() {
                 T += A;
                 break;
         }
-        if (T >= 1000000007)
-            T %= 1000000007;
         index++;
     }
-    printf("%d\n", T);
+    printf("%ld\n", T % 1000000007);
     return 0;
 }
