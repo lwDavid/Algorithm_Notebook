@@ -1,23 +1,18 @@
-#include <cstdio>
-const int maxn = 210;
-int a[maxn];
+#include <stdio.h>
 int main() {
-    int n, x;
+    int n, x, a[200], i;
     while (scanf("%d", &n) != EOF) {
-        for (int i = 0; i < n; i++) {
-            scanf("%d", &a[i]);
-        }
-        scanf("%d", &x);
-        int k;
-        for (k = 0; k < n; k++) {
-            if (a[k] == x) {
-                printf("%d\n", k);
-                break;
-            }
-        }
-        if (k == n) {
+        for (i = 0; i < n; i++)
+            if (scanf("%d", &a[i]))
+                ;
+        if (scanf("%d", &x))
+            for (i = 0; i < n; i++)
+                if (a[i] == x) {
+                    printf("%d\n", i);
+                    break;
+                }
+        if (i == n)
             printf("-1\n");
-        }
     }
     return 0;
 }
