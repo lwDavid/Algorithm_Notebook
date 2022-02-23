@@ -1,6 +1,6 @@
 #include <stdio.h>
 int main() {
-    int pri[104730] = {0}, p = 0, notpri[104730] = {0};
+    int pri[10001] = {0}, p = 0, notpri[104730] = {0};
     notpri[0] = notpri[1] = 1;
     for (int i = 2; i < 104730; i++) {
         if (notpri[i] == 0)
