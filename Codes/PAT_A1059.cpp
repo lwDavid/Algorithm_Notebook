@@ -32,6 +32,8 @@ int main() {
                 }
                 count++;
             }
+            if (N == 1)
+                break;
         }
         if (N != 1) {
             fac[count].x = N;
