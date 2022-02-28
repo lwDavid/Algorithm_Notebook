@@ -33,37 +33,37 @@ void print(bign a) {
     for (int i = a.len - 1; i >= 0; i--)
         printf("%d", a.d[i]);
 }
-int main() {
-    int count[10] = {0}, flag = 1;
-    char str[21];
-    if (scanf("%s", str)) {
-        int len = strlen(str);
-        for (int i = 0; i < len; i++)
-            count[str[i] - '0']++;
-    }
-    bign A = change(str);
-    bign Q = multi2(A);
-    if (Q.len != A.len)
-        flag = 0;
+int judge(bign a, bign b) {
+    if (a.len != b.len)
+        return 0;
     else {
-        for (int i = 0; i < Q.len; i++) {
-            count[Q.d[i]]--;
-            if (count[Q.d[i]] < 0) {
-                flag = 0;
-                break;
-            }
+        int count[10] = {0};
+        for (int i = 0; i < a.len; i++)
+            count[a.d[i]]++;
+        for (int i = 0; i < b.len; i++) {
+            count[b.d[i]]--;
+            if (count[b.d[i]] < 0)
+                return 0;
         }
         for (int i = 0; i < 10; i++)
-            if (count[i] != 0) {
-                flag = 0;
-                break;
-            }
+            if (count[i] != 0)
+                return 0;
     }
-    if (flag)
+    return 1;
+}
+int main() {
+    char str[21];
+    if (scanf("%s", str))
+        ;
+    bign A = change(str);
+    bign Q = multi2(A);
+    if (judge(A, Q)) {
         printf("Yes\n");
-    else
+        print(Q);
+    } else {
         printf("No\n");
-    print(Q);
+        print(Q);
+    }
     printf("\n");
     return 0;
 }
