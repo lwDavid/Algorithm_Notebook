@@ -55,7 +55,7 @@ int main() {
     return 0;
 }
 
-// The reference version with worse time and memory consuming than mine.
+// The reference version.
 // #include <iostream>
 // #include <string>
 // using namespace std;
