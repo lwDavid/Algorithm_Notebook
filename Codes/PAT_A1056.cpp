@@ -15,16 +15,11 @@ int main() {
     for (int i = 0; i < NP; i++)
         if (scanf("%d", &sequence))
             remain.push(mouse[sequence]);
-    while (!remain.empty()) {
+    while (remain.size() != 1) {
         size = remain.size();
         group = size / NG;
         if (size % NG)
             group++;
-        if (size == 1) {
-            mouse[remain.front().index].rank = 1;
-            remain.pop();
-            break;
-        }
         for (i = 0; i < size; i++) {
             temp = remain.front().weight > maxw ? remain.front() : temp;
             maxw = remain.front().weight > maxw ? remain.front().weight : maxw;
@@ -37,6 +32,7 @@ int main() {
             }
         }
     }
+    mouse[remain.front().index].rank = 1;
     printf("%d", mouse[0].rank);
     for (int i = 1; i < NP; i++)
         printf(" %d", mouse[i].rank);
