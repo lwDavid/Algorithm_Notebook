@@ -35,15 +35,12 @@ int main() {
             cin >> str;
             if (str == "Push") {
                 if (scanf("%d", &temp)) {
-                    pre[pre_index] = temp;
+                    pre[pre_index++] = temp;
                     stk.push(temp);
-                    pre_index++;
                 }
             } else {
-                int t = stk.top();
+                in[in_index++] = stk.top();
                 stk.pop();
-                in[in_index] = t;
-                in_index++;
             }
         }
     postOrder(creat(1, n, 1, n));
