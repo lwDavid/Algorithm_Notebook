@@ -1,4 +1,4 @@
-// My initial version.
+// My initial version with a better time consume.
 #include <cstdio>
 int main() {
     int N, M, L, fav[201], c[10000], dp[10000], t, index = 0;
@@ -12,12 +12,12 @@ int main() {
         for (int i = 0; i < L; i++)
             if (scanf("%d", &t))
                 if (hashTable[t])
-                    c[index++] = t;
+                    c[index++] = fav[t];
     t = -1;
     for (int i = 0; i < index; i++) {
         dp[i] = 1;
         for (int j = 0; j < i; j++)
-            if (dp[j] + 1 > dp[i] && fav[c[j]] <= fav[c[i]])
+            if (dp[j] + 1 > dp[i] && c[j] <= c[i])
                 dp[i] = dp[j] + 1;
         t = dp[i] > t ? dp[i] : t;
     }
