@@ -33,23 +33,16 @@ void PeekMedian() {
         printf("Invalid\n");
     } else {
         int rank = p % 2 ? (p + 1) / 2 : p / 2;
-        int count = 0;
-        for (int i = 0; i <= blocks; i++) {
-            if (count + block[i] < rank) {
-                count += block[i];
-                continue;
-            } else {
-                for (int j = 0; j < blockSize; j++) {
-                    if (count + table[i * blockSize + j] < rank) {
-                        count += table[i * blockSize + j];
-                        continue;
-                    } else {
-                        printf("%d\n", i * blockSize + j);
-                        return;
-                    }
-                }
-            }
+        int count = 0, index = 0;
+        while (count + block[index] < rank) {
+            count += block[index++];
         }
+        index *= blockSize;
+        while (count + table[index] < rank) {
+            count += table[index++];
+        }
+        printf("%d\n", index);
+        return;
     }
     return;
 }
